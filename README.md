@@ -535,7 +535,7 @@ The following functionality was tested.
 
 ## Time Taken
 
-Approximately **2.5 hours total**, including implementation, debugging, testing, deployment, and documentation.
+Approximately **4.5 hours total**, including implementation, debugging, testing, deployment, and documentation.
 
 ## Live Demo
 
