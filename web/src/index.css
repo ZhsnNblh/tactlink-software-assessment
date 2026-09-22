@@ -79,25 +79,55 @@ button {
   border-color: #2563eb;
 }
 
-.login-card button,
-.add-form button {
-  padding: 13px 20px;
+/* Login button only */
+
+.login-card form button {
+  width: 100%;
+  padding: 13px 18px;
   border: none;
   border-radius: 8px;
   background: #2563eb;
   color: white;
   font-weight: 600;
+  cursor: pointer;
   transition: background 0.2s ease;
 }
 
-.add-form button:hover {
+.login-card form button:hover {
   background: #1d4ed8;
 }
 
-.login-card button:disabled,
-.add-form button:disabled {
+.login-card form button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Sign up / Login switch */
+
+.switch-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 18px;
+}
+
+.login-card .switch-button {
+  display: inline;
+  width: auto;
+  margin: 0;
+  padding: 4px 6px;
+  border: none;
+  background: transparent !important;
+  color: #2563eb !important;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.login-card .switch-button:hover {
+  background: transparent !important;
+  color: #1d4ed8 !important;
+  text-decoration: underline;
 }
 
 /* Todo */
@@ -146,6 +176,25 @@ button {
 
 .add-form input {
   flex: 1;
+}
+
+.add-form button {
+  padding: 13px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.add-form button:hover {
+  background: #1d4ed8;
+}
+
+.add-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .todo-list {
@@ -229,6 +278,8 @@ button {
 .error-message {
   color: #dc2626;
 }
+
+/* Mobile responsive */
 
 @media (max-width: 600px) {
   .login-card {

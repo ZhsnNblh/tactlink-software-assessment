@@ -12,6 +12,18 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
+export const SIGNUP_MUTATION = gql`
+  mutation Signup($email: String!, $password: String!) {
+    signup(email: $email, password: $password) {
+      token
+      user {
+        id
+        email
+      }
+    }
+  }
+`;
+
 export const GET_TODOS = gql`
   query GetTodos {
     todos {

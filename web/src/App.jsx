@@ -13,6 +13,7 @@ import {
 
 import {
   LOGIN_MUTATION,
+  SIGNUP_MUTATION,
   GET_TODOS,
   CREATE_TODO,
   DELETE_TODO,
@@ -20,7 +21,8 @@ import {
 } from "./graphql";
 
 const GRAPHQL_URL =
-  import.meta.env.VITE_GRAPHQL_URL || "http://192.168.0.3:4000/";
+  import.meta.env.VITE_GRAPHQL_URL ||
+  "http://192.168.0.3:4000/";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -53,10 +55,17 @@ function App() {
 function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignup, setIsSignup] = useState(false);
 
-  const [login, { loading }] = useMutation(LOGIN_MUTATION);
+  const [login, { loading: loginLoading }] =
+    useMutation(LOGIN_MUTATION);
 
-  const handleLogin = async (event) => {
+  const [signup, { loading: signupLoading }] =
+    useMutation(SIGNUP_MUTATION);
+
+  const loading = loginLoading || signupLoading;
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!email || !password) {
@@ -65,19 +74,30 @@ function LoginPage({ onLogin }) {
     }
 
     try {
-      const { data } = await login({
+      const mutation = isSignup ? signup : login;
+
+      const { data } = await mutation({
         variables: {
           email,
           password,
         },
       });
 
-      if (data?.login?.token) {
-        onLogin(data.login.token);
+      const authData = isSignup
+        ? data?.signup
+        : data?.login;
+
+      if (authData?.token) {
+        onLogin(authData.token);
       }
     } catch (error) {
       console.error(error);
-      alert("Invalid email or password.");
+
+      alert(
+        isSignup
+          ? "Unable to create account. The email may already be registered."
+          : "Invalid email or password."
+      );
     }
   };
 
@@ -85,9 +105,14 @@ function LoginPage({ onLogin }) {
     <div className="login-page">
       <div className="login-card">
         <h1>TactLink Todo</h1>
-        <p>Sign in to manage your tasks</p>
 
-        <form onSubmit={handleLogin}>
+        <p>
+          {isSignup
+            ? "Create an account to manage your tasks"
+            : "Sign in to manage your tasks"}
+        </p>
+
+        <form onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email"
@@ -103,9 +128,23 @@ function LoginPage({ onLogin }) {
           />
 
           <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading
+              ? "Please wait..."
+              : isSignup
+              ? "Create Account"
+              : "Login"}
           </button>
         </form>
+
+        <button
+          type="button"
+          className="switch-button"
+          onClick={() => setIsSignup(!isSignup)}
+        >
+          {isSignup
+            ? "Already have an account? Login"
+            : "Don't have an account? Sign Up"}
+        </button>
       </div>
     </div>
   );
