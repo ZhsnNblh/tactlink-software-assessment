@@ -540,7 +540,7 @@ Approximately **4.5 hours total**, including implementation, debugging, testing,
 ## Live Demo
 
 **Web application:**  
-https://tactlink-software-assessment-8cud6b8qq-husna.vercel.app
+https://tactlink-software-assessment.vercel.app/
 
 **GraphQL backend:**  
 https://tactlink-backend.onrender.com
